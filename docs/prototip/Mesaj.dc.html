@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Mesaj</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#3B6D11}a:hover{color:#27500A}
+@keyframes rise{0%{transform:translateY(12px);opacity:0}100%{transform:translateY(0);opacity:1}}
+.rise{animation:rise .25s cubic-bezier(.2,.9,.3,1.2) both}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F4F1E8; color: #173404; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; position: relative; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px; padding: 56px 16px 10px; background: #FFFFFF; border-bottom: 1px solid #D3D1C7">
+    <a href="Teklif.dc.html" aria-label="Geri" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #D3D1C7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#173404" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div style="position: relative">
+      <svg width="44" height="44" viewBox="-22 -22 44 44" aria-hidden="true"><circle r="21" fill="#E1F5EE"/><circle cy="-4" r="7" fill="#F5C4B3"/><path d="M-10 13c1-6 5-9 10-9s9 3 10 9" fill="#D85A30"/><rect x="-8" y="-13" width="16" height="5" rx="2" fill="#2C2C2A"/></svg>
+      <span style="position: absolute; right: -4px; top: -4px; width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; border: 1px solid #378ADD; display: flex; align-items: center; justify-content: center; font-size: 11px">💧</span>
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 600">Ayşe</span><span style="font-size: 12px; color: #3B6D11">Su · kabul edildi · 1,1 km</span></div>
+    <a href="Harita.dc.html" aria-label="Haritada göster" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #D3D1C7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#173404" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>
+    </a>
+  </div>
+  <div style="display: flex; justify-content: center; padding: 10px 16px 0"><span style="padding: 6px 12px; border-radius: 999px; background: #EAF3DE; color: #27500A; font-size: 12px">Bu sohbet ihtiyaç kapanınca 24 saat sonra silinir</span></div>
+  <div style="flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 12px 16px; overflow: hidden; justify-content: flex-end">
+    <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="5">
+    <div class="rise" style="display: flex; justify-content: {{ m.justify }}">
+      <div style="max-width: 260px; padding: 10px 14px; border-radius: 18px; background: {{ m.bg }}; color: {{ m.fg }}; font-size: 15px; line-height: 1.4; border: 1px solid {{ m.border }}">{{ m.text }}<span style="display: block; margin-top: 4px; font-size: 11px; color: {{ m.time }}">{{ m.when }}</span></div>
+    </div>
+    </sc-for>
+  </div>
+  <div style="display: flex; gap: 8px; padding: 0 16px 8px; overflow: hidden">
+    <sc-for list="{{ quick }}" as="q" hint-placeholder-count="4">
+    <button onClick="{{ q.send }}" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #D3D1C7; background: #FFFFFF; color: #27500A; font-size: 13px; white-space: nowrap; cursor: pointer">{{ q.label }}</button>
+    </sc-for>
+  </div>
+  <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px 32px; background: #FFFFFF; border-top: 1px solid #D3D1C7">
+    <input id="txt" placeholder="Mesaj yaz…" style="flex: 1; height: 44px; border-radius: 22px; border: 1px solid #D3D1C7; background: #F4F1E8; padding: 0 16px; font-size: 15px; color: #173404; box-sizing: border-box">
+    <button onClick="{{ sendTyped }}" aria-label="Gönder" style="width: 44px; height: 44px; border-radius: 50%; border: none; background: #3B6D11; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EAF3DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+    </button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { msgs: [
+      { me: false, text: 'Çeşme kuruymuş, 1 litre yeter 🙏', when: '10:12' },
+      { me: true, text: 'Bende 2 litre var, geliyorum! Yavaş yürü, 15 dk.', when: '10:14' },
+      { me: false, text: 'Harikasın. Büyük kaya ile kırmızı-beyaz işaretin yanındayım.', when: '10:15' }
+    ] };
+  }
+  push(text) {
+    const d = new Date(); const when = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    this.setState({ msgs: [...this.state.msgs, { me: true, text, when }].slice(-6) });
+  }
+  renderVals() {
+    const msgs = this.state.msgs.map(m => ({
+      text: m.text, when: m.when,
+      justify: m.me ? 'flex-end' : 'flex-start',
+      bg: m.me ? '#3B6D11' : '#FFFFFF', fg: m.me ? '#EAF3DE' : '#173404', border: m.me ? '#3B6D11' : '#D3D1C7', time: m.me ? '#C0DD97' : '#888780'
+    }));
+    const quick = ['Geliyorum 🏃', 'Nerede buluşalım?', '5 dk', 'Vardım 👋'].map(label => ({ label, send: () => this.push(label) }));
+    return { msgs, quick, sendTyped: () => this.push('Tamam, görüyorum seni!') };
+  }
+}
+</script>
+</body>
+</html>

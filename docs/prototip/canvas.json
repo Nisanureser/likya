@@ -18,17 +18,23 @@
     "Pano.dc.html": { "x": 0, "y": 2400, "w": 390, "h": 844, "title": "10 · Pano", "is_interactive": true, "radius": 40 },
     "Ihtiyac.dc.html": { "x": 470, "y": 2400, "w": 390, "h": 844, "title": "11 · İhtiyaç bildir", "is_interactive": true, "radius": 40 },
     "Teklif.dc.html": { "x": 940, "y": 2400, "w": 390, "h": 844, "title": "12 · İhtiyaç & teklif", "is_interactive": true, "radius": 40 },
-    "Avatar.dc.html": { "x": 1410, "y": 2400, "w": 390, "h": 844, "title": "15 · Avatarını yap", "is_interactive": true, "radius": 40 }
+    "Avatar.dc.html": { "x": 1410, "y": 2400, "w": 390, "h": 844, "title": "15 · Avatarını yap", "is_interactive": true, "radius": 40 },
+    "Plan.dc.html": { "x": 0, "y": 3600, "w": 390, "h": 844, "title": "13 · Yürüyüş planı", "is_interactive": true, "radius": 40 },
+    "Mesaj.dc.html": { "x": 470, "y": 3600, "w": 390, "h": 844, "title": "12b · Mesaj", "is_interactive": true, "radius": 40 },
+    "Profil.dc.html": { "x": 940, "y": 3600, "w": 390, "h": 844, "title": "15b · Profil", "is_interactive": true, "radius": 40 },
+    "Ayarlar.dc.html": { "x": 1410, "y": 3600, "w": 390, "h": 844, "title": "16 · Ayarlar", "is_interactive": true, "radius": 40 }
   },
   "order": [
     "Main.dc.html", "Giris.dc.html", "Izinler.dc.html", "Paket.dc.html", "Harita.dc.html",
     "Etaplar.dc.html", "EtapDetay.dc.html", "Poi.dc.html", "Rapor.dc.html", "Acil.dc.html",
-    "Pano.dc.html", "Ihtiyac.dc.html", "Teklif.dc.html", "Avatar.dc.html"
+    "Pano.dc.html", "Ihtiyac.dc.html", "Teklif.dc.html", "Avatar.dc.html",
+    "Plan.dc.html", "Mesaj.dc.html", "Profil.dc.html", "Ayarlar.dc.html"
   ],
   "notes": {
     "akis1": { "x": 0, "y": -300, "text": "Akış 1 · İlk açılış → çevrimdışı harita", "kind": "title1", "maxW": 2270 },
     "akis2": { "x": 0, "y": 964, "text": "Akış 2 · Yürüyüş modu → rapor → acil", "kind": "title1", "maxW": 2270 },
-    "akis3": { "x": 0, "y": 2164, "text": "Akış 3 · Dayanışma: avatarlar, ihtiyaç balonları, teklif", "kind": "title1", "maxW": 2270 }
+    "akis3": { "x": 0, "y": 2164, "text": "Akış 3 · Dayanışma: avatarlar, ihtiyaç balonları, teklif", "kind": "title1", "maxW": 2270 },
+    "akis4": { "x": 0, "y": 3364, "text": "Akış 4 · Güvenlik planı, mesaj, profil, ayarlar", "kind": "title1", "maxW": 2270 }
   },
   "designSystems": []
 }
