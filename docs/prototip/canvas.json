@@ -9,20 +9,26 @@
     "Giris.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "2 · Giriş", "is_interactive": true, "radius": 40 },
     "Izinler.dc.html": { "x": 940, "y": 0, "w": 390, "h": 844, "title": "3 · İzinler", "is_interactive": true, "radius": 40 },
     "Paket.dc.html": { "x": 1410, "y": 0, "w": 390, "h": 844, "title": "4 · Harita paketi", "is_interactive": true, "radius": 40 },
-    "Harita.dc.html": { "x": 1880, "y": 0, "w": 390, "h": 844, "title": "5 · Harita", "is_interactive": true, "radius": 40 },
+    "Harita.dc.html": { "x": 1880, "y": 0, "w": 390, "h": 844, "title": "5 · Harita (avatarlı)", "is_interactive": true, "radius": 40 },
     "Etaplar.dc.html": { "x": 0, "y": 1200, "w": 390, "h": 844, "title": "8 · Etaplar", "is_interactive": true, "radius": 40 },
     "EtapDetay.dc.html": { "x": 470, "y": 1200, "w": 390, "h": 844, "title": "9 · Etap detayı", "is_interactive": true, "radius": 40 },
     "Poi.dc.html": { "x": 940, "y": 1200, "w": 390, "h": 844, "title": "6 · POI detayı", "is_interactive": true, "radius": 40 },
     "Rapor.dc.html": { "x": 1410, "y": 1200, "w": 390, "h": 844, "title": "7 · Rapor ver", "is_interactive": true, "radius": 40 },
-    "Acil.dc.html": { "x": 1880, "y": 1200, "w": 390, "h": 844, "title": "14 · Acil", "is_interactive": true, "radius": 40 }
+    "Acil.dc.html": { "x": 1880, "y": 1200, "w": 390, "h": 844, "title": "14 · Acil", "is_interactive": true, "radius": 40 },
+    "Pano.dc.html": { "x": 0, "y": 2400, "w": 390, "h": 844, "title": "10 · Pano", "is_interactive": true, "radius": 40 },
+    "Ihtiyac.dc.html": { "x": 470, "y": 2400, "w": 390, "h": 844, "title": "11 · İhtiyaç bildir", "is_interactive": true, "radius": 40 },
+    "Teklif.dc.html": { "x": 940, "y": 2400, "w": 390, "h": 844, "title": "12 · İhtiyaç & teklif", "is_interactive": true, "radius": 40 },
+    "Avatar.dc.html": { "x": 1410, "y": 2400, "w": 390, "h": 844, "title": "15 · Avatarını yap", "is_interactive": true, "radius": 40 }
   },
   "order": [
     "Main.dc.html", "Giris.dc.html", "Izinler.dc.html", "Paket.dc.html", "Harita.dc.html",
-    "Etaplar.dc.html", "EtapDetay.dc.html", "Poi.dc.html", "Rapor.dc.html", "Acil.dc.html"
+    "Etaplar.dc.html", "EtapDetay.dc.html", "Poi.dc.html", "Rapor.dc.html", "Acil.dc.html",
+    "Pano.dc.html", "Ihtiyac.dc.html", "Teklif.dc.html", "Avatar.dc.html"
   ],
   "notes": {
     "akis1": { "x": 0, "y": -300, "text": "Akış 1 · İlk açılış → çevrimdışı harita", "kind": "title1", "maxW": 2270 },
-    "akis2": { "x": 0, "y": 964, "text": "Akış 2 · Yürüyüş modu → rapor → acil", "kind": "title1", "maxW": 2270 }
+    "akis2": { "x": 0, "y": 964, "text": "Akış 2 · Yürüyüş modu → rapor → acil", "kind": "title1", "maxW": 2270 },
+    "akis3": { "x": 0, "y": 2164, "text": "Akış 3 · Dayanışma: avatarlar, ihtiyaç balonları, teklif", "kind": "title1", "maxW": 2270 }
   },
   "designSystems": []
 }

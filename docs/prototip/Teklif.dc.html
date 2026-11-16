@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>İhtiyaç ve teklif</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#3B6D11}a:hover{color:#27500A}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes rise{0%{transform:translateY(16px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(260px) rotate(540deg);opacity:0}}
+.pop{animation:pop .35s cubic-bezier(.34,1.56,.64,1) both}
+.rise{animation:rise .3s cubic-bezier(.2,.9,.3,1.2) both}
+.confetti span{position:absolute;top:0;width:8px;height:12px;border-radius:2px;animation:fall 1.6s ease-in both}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F4F1E8; color: #173404; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; position: relative; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px; padding: 56px 16px 8px">
+    <a href="Pano.dc.html" aria-label="Geri" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #D3D1C7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#173404" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <h1 style="margin: 0; font-size: 20px; font-weight: 600; flex: 1">İhtiyaç</h1>
+    <a href="Acil.dc.html" aria-label="Acil durum" style="width: 44px; height: 44px; border-radius: 50%; background: #A32D2D; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #FFFFFF; font-size: 12px; font-weight: 700">SOS</a>
+  </div>
+  <div style="margin: 8px 16px 0; padding: 18px 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #D3D1C7; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden">
+    <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+    <div class="confetti" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+      <span style="left: 8%; background: #D85A30; animation-delay: 0s"></span><span style="left: 20%; background: #378ADD; animation-delay: .15s"></span><span style="left: 33%; background: #EF9F27; animation-delay: .05s"></span><span style="left: 46%; background: #3B6D11; animation-delay: .25s"></span><span style="left: 58%; background: #D4537E; animation-delay: .1s"></span><span style="left: 70%; background: #378ADD; animation-delay: .3s"></span><span style="left: 82%; background: #D85A30; animation-delay: .2s"></span><span style="left: 92%; background: #3B6D11; animation-delay: .08s"></span>
+    </div>
+    </sc-if>
+    <div style="display: flex; align-items: center; gap: 14px">
+      <div style="position: relative; flex-shrink: 0">
+        <svg width="64" height="64" viewBox="-32 -32 64 64" aria-hidden="true"><circle r="31" fill="#E1F5EE"/><circle cy="-6" r="10.5" fill="#F5C4B3"/><path d="M-16 20c1-10 8-14 16-14s15 4 16 14" fill="#D85A30"/><rect x="-12" y="-19" width="24" height="7" rx="3" fill="#2C2C2A"/></svg>
+        <span class="pop" style="position: absolute; right: -10px; top: -10px; width: 36px; height: 36px; border-radius: 50%; background: #FFFFFF; border: 1.5px solid #378ADD; display: flex; align-items: center; justify-content: center; font-size: 20px">💧</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 3px; flex: 1">
+        <span style="font-size: 18px; font-weight: 600">Ayşe · Su lazım</span>
+        <span style="font-size: 13px; color: #5F5E5A">TR · EN · orta deneyim · 12 dk önce</span>
+        <span style="font-size: 13px; color: #3B6D11; font-weight: 500">1,2 km ileride, Alınca yönünde</span>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #173404; padding: 12px 14px; border-radius: 14px; background: #F4F1E8">"Çeşme kuruymuş, 1 litre yeter. Yavaş yürüyorum, yetişirsin."</p>
+    <div style="display: flex; align-items: center; gap: 0; font-size: 11px; color: #888780">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1">
+        <span style="width: 22px; height: 22px; border-radius: 50%; background: {{ st.bg }}; border: 2px solid {{ st.border }}; display: flex; align-items: center; justify-content: center; font-size: 11px; color: {{ st.fg }}; font-weight: 600">{{ st.mark }}</span>
+        <span style="color: {{ st.labelFg }}; font-weight: {{ st.weight }}">{{ st.label }}</span>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="margin: 14px 16px 0; display: flex; flex-direction: column; gap: 10px">
+    <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{ offer }}" style="height: 56px; border-radius: 16px; border: none; background: #3B6D11; color: #EAF3DE; font-size: 17px; font-weight: 600; cursor: pointer">Su verebilirim 🙌</button>
+    <p style="margin: 0; text-align: center; font-size: 13px; color: #5F5E5A">Teklif edince Ayşe'ye bildirim gider; kabul ederse tam konumunuzu birbirinize açarsınız.</p>
+    </sc-if>
+    <sc-if value="{{ isOffered }}" hint-placeholder-val="{{ false }}">
+    <div class="rise" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: #E6F1FB; border: 1px solid #85B7EB; color: #0C447C; font-size: 14px">
+      <span style="font-size: 22px">⏳</span>
+      <span style="flex: 1">Teklifin Ayşe'ye gitti. Kabul edince haber veririz.</span>
+    </div>
+    <button onClick="{{ accept }}" style="height: 48px; border-radius: 14px; border: 1px dashed #B4B2A9; background: transparent; color: #5F5E5A; font-size: 13px; cursor: pointer">(prototip: Ayşe kabul etti ▶)</button>
+    <button onClick="{{ withdraw }}" style="height: 44px; border-radius: 14px; border: 1px solid #D3D1C7; background: #FFFFFF; color: #5F5E5A; font-size: 14px; cursor: pointer">Teklifi geri çek</button>
+    </sc-if>
+    <sc-if value="{{ isAccepted }}" hint-placeholder-val="{{ false }}">
+    <div class="rise" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 18px; background: #EAF3DE; border: 1px solid #C0DD97">
+      <span style="font-size: 16px; font-weight: 600; color: #27500A">Ayşe teklifini kabul etti 🎉</span>
+      <span style="font-size: 14px; color: #27500A">Artık tam konumunu görebilirsin. 1,1 km, patika boyunca ~15 dk.</span>
+      <div style="display: flex; gap: 10px">
+        <a href="Harita.dc.html" style="flex: 1; display: flex; align-items: center; justify-content: center; height: 46px; border-radius: 12px; background: #FFFFFF; border: 1px solid #C0DD97; color: #27500A; text-decoration: none; font-size: 14px; font-weight: 600">Haritada göster</a>
+        <a href="Teklif.dc.html" style="flex: 1; display: flex; align-items: center; justify-content: center; height: 46px; border-radius: 12px; background: #FFFFFF; border: 1px solid #C0DD97; color: #27500A; text-decoration: none; font-size: 14px; font-weight: 600">Mesaj yaz</a>
+      </div>
+    </div>
+    <button onClick="{{ complete }}" style="height: 56px; border-radius: 16px; border: none; background: #3B6D11; color: #EAF3DE; font-size: 17px; font-weight: 600; cursor: pointer">Suyu verdim, tamamlandı ✓</button>
+    </sc-if>
+    <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+    <div class="rise" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 16px; border-radius: 18px; background: #FFFFFF; border: 1px solid #D3D1C7; text-align: center">
+      <span style="font-size: 40px">🙌</span>
+      <span style="font-size: 20px; font-weight: 600">Teşekkürler!</span>
+      <span style="font-size: 14px; color: #5F5E5A">Ayşe'nin balonu indi. Bu sezon 3 kişiye yardım ettin.</span>
+      <div style="display: flex; gap: 6px; margin-top: 6px">
+        <span style="padding: 6px 10px; border-radius: 999px; background: #EAF3DE; color: #27500A; font-size: 12px; font-weight: 600">💧 Su kardeşi</span>
+        <span style="padding: 6px 10px; border-radius: 999px; background: #FAEEDA; color: #633806; font-size: 12px; font-weight: 600">🔋 Şarj meleği</span>
+      </div>
+      <a href="Pano.dc.html" style="margin-top: 10px; display: flex; align-items: center; justify-content: center; height: 48px; width: 100%; border-radius: 14px; background: #3B6D11; color: #EAF3DE; text-decoration: none; font-size: 15px; font-weight: 600">Panoya dön</a>
+    </div>
+    </sc-if>
+  </div>
+  <p style="margin: auto 16px 28px; font-size: 12px; color: #888780; text-align: center">Dayanışma ücretsizdir. Ücretli yerel hizmetler ayrı listelenir, karışmaz.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { status: 'open' }; }
+  renderVals() {
+    const order = ['open', 'offered', 'accepted', 'completed'];
+    const labels = { open: 'Bekliyor', offered: 'Teklif', accepted: 'Kabul', completed: 'Tamam' };
+    const idx = order.indexOf(this.state.status);
+    const steps = order.map((k, i) => {
+      const reached = i <= idx, cur = i === idx;
+      return { label: labels[k], mark: i < idx ? '✓' : String(i + 1),
+        bg: reached ? '#3B6D11' : '#FFFFFF', border: reached ? '#3B6D11' : '#D3D1C7',
+        fg: reached ? '#EAF3DE' : '#888780', labelFg: reached ? '#27500A' : '#888780', weight: cur ? '600' : '400' };
+    });
+    const st = this.state.status;
+    return {
+      steps,
+      isOpen: st === 'open', isOffered: st === 'offered', isAccepted: st === 'accepted', isDone: st === 'completed',
+      offer: () => this.setState({ status: 'offered' }),
+      withdraw: () => this.setState({ status: 'open' }),
+      accept: () => this.setState({ status: 'accepted' }),
+      complete: () => this.setState({ status: 'completed' })
+    };
+  }
+}
+</script>
+</body>
+</html>

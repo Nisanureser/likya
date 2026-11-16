@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>İhtiyaç bildir</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#3B6D11}a:hover{color:#27500A}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.pop{animation:pop .35s cubic-bezier(.34,1.56,.64,1) both}
+.bob{animation:bob 2.6s ease-in-out infinite}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #8A8F7E; color: #173404; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden">
+  <div style="background: #F4F1E8; border-radius: 28px 28px 0 0; display: flex; flex-direction: column; padding: 12px 20px 32px; gap: 16px; box-sizing: border-box">
+    <div style="width: 40px; height: 4px; border-radius: 2px; background: #D3D1C7; align-self: center"></div>
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <h1 style="margin: 0; font-size: 22px; font-weight: 600">Neye ihtiyacın var?</h1>
+      <a href="Harita.dc.html" aria-label="Kapat" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #D3D1C7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #173404; font-size: 20px">×</a>
+    </div>
+    <sc-if value="{{ editing }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; align-items: center; justify-content: center; height: 120px; border-radius: 18px; background: #EAF3DE; position: relative">
+      <div class="bob" style="position: relative">
+        <svg width="72" height="72" viewBox="-36 -36 72 72" aria-hidden="true"><circle r="35" fill="#FFFFFF"/><circle r="31" fill="#FAEEDA"/><circle cy="-8" r="12" fill="#F0997B"/><path d="M-18 24c1-12 9-17 18-17s17 5 18 17" fill="#3B6D11"/><path d="M-11 -12q11-14 22 0" fill="#854F0B"/></svg>
+        <sc-if value="{{ hasPick }}" hint-placeholder-val="{{ false }}">
+        <span class="pop" style="position: absolute; right: -22px; top: -22px; width: 48px; height: 44px; border-radius: 16px; background: #FFFFFF; border: 1.5px solid #3B6D11; display: flex; align-items: center; justify-content: center; font-size: 24px">{{ pickedEmoji }}</span>
+        </sc-if>
+      </div>
+      <span style="position: absolute; bottom: 10px; font-size: 12px; color: #5F5E5A">{{ previewText }}</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{ kinds }}" as="k" hint-placeholder-count="10">
+      <button onClick="{{ k.pick }}" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px 8px; border-radius: 14px; border: 2px solid {{ k.border }}; background: {{ k.bg }}; cursor: pointer">
+        <span style="font-size: 26px">{{ k.emoji }}</span>
+        <span style="font-size: 11px; font-weight: 500; color: #27500A">{{ k.label }}</span>
+      </button>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="msg" style="font-size: 13px; font-weight: 500; color: #27500A">Kısaca anlat</label>
+      <input id="msg" placeholder="Örn. çeşme kuruymuş, 1 litre yeter" style="height: 52px; border-radius: 14px; border: 1px solid #D3D1C7; background: #FFFFFF; padding: 0 14px; font-size: 15px; color: #173404; box-sizing: border-box">
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D3D1C7; font-size: 13px; color: #5F5E5A">
+      <span>Görünür: 5 km içindekiler · {{ ttl }}</span>
+      <span style="font-size: 12px; color: #888780">konumun 250 m hücre</span>
+    </div>
+    <button onClick="{{ submit }}" style="height: 56px; border-radius: 16px; border: none; background: {{ submitBg }}; color: {{ submitFg }}; font-size: 17px; font-weight: 600; cursor: pointer">Balonu kaldır 🎈</button>
+    <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+    <p style="margin: -8px 0 0; font-size: 13px; color: #A32D2D; text-align: center">Önce bir ihtiyaç seç.</p>
+    </sc-if>
+    </sc-if>
+    <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 16px 0 8px; text-align: center">
+      <div class="pop" style="position: relative">
+        <svg width="96" height="96" viewBox="-48 -48 96 96" aria-hidden="true"><circle r="46" fill="#FFFFFF"/><circle r="41" fill="#FAEEDA"/><circle cy="-10" r="16" fill="#F0997B"/><path d="M-24 32c1-16 12-22 24-22s23 6 24 22" fill="#3B6D11"/><path d="M-15 -16q15-18 30 0" fill="#854F0B"/></svg>
+        <span style="position: absolute; right: -24px; top: -24px; width: 56px; height: 52px; border-radius: 18px; background: #FFFFFF; border: 2px solid #3B6D11; display: flex; align-items: center; justify-content: center; font-size: 28px">{{ pickedEmoji }}</span>
+      </div>
+      <span style="font-size: 20px; font-weight: 600">Balonun havada!</span>
+      <span style="font-size: 14px; color: #5F5E5A; max-width: 290px">Yakındaki 3 yürüyüşçü görüyor. Biri "verebilirim" deyince hemen haber vereceğiz. {{ ttl }} sonra kendiliğinden iner.</span>
+      <a href="Harita.dc.html" style="margin-top: 8px; display: flex; align-items: center; justify-content: center; height: 52px; width: 100%; border-radius: 14px; background: #3B6D11; color: #EAF3DE; text-decoration: none; font-size: 16px; font-weight: 600">Haritada gör</a>
+      <a href="Pano.dc.html" style="font-size: 14px; color: #5F5E5A; text-decoration: none; padding: 6px">Panoya git</a>
+    </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { picked: null, done: false, error: false }; }
+  renderVals() {
+    const s = this.state;
+    const base = [
+      { id: 'water', emoji: '💧', label: 'Su', ttl: '6 saat' },
+      { id: 'food', emoji: '🍎', label: 'Yiyecek', ttl: '12 saat' },
+      { id: 'power', emoji: '🔋', label: 'Şarj', ttl: '6 saat' },
+      { id: 'firstaid', emoji: '🩹', label: 'İlk yardım', ttl: '6 saat' },
+      { id: 'lost', emoji: '🧭', label: 'Kayboldum', ttl: '12 saat' },
+      { id: 'gear', emoji: '🥾', label: 'Ekipman', ttl: '24 saat' },
+      { id: 'transport', emoji: '🚕', label: 'Ulaşım', ttl: '24 saat' },
+      { id: 'lodging', emoji: '🏕️', label: 'Konaklama', ttl: '24 saat' },
+      { id: 'buddy', emoji: '🤝', label: 'Arkadaş', ttl: '3 gün' },
+      { id: 'sos', emoji: '🆘', label: 'Acil', ttl: '24 saat' }
+    ];
+    const cur = base.find(k => k.id === s.picked);
+    return {
+      kinds: base.map(k => ({ ...k, border: s.picked === k.id ? '#3B6D11' : '#D3D1C7', bg: s.picked === k.id ? '#EAF3DE' : '#FFFFFF', pick: () => this.setState({ picked: k.id, error: false }) })),
+      editing: !s.done, done: s.done, error: s.error,
+      hasPick: !!cur,
+      pickedEmoji: cur ? cur.emoji : '',
+      previewText: cur ? 'Haritada böyle görüneceksin' : 'Bir ihtiyaç seç, balonun burada belirsin',
+      ttl: cur ? cur.ttl : '6–24 saat',
+      submitBg: cur ? '#3B6D11' : '#D3D1C7', submitFg: cur ? '#EAF3DE' : '#5F5E5A',
+      submit: () => { if (!cur) { this.setState({ error: true }); return; } this.setState({ done: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
