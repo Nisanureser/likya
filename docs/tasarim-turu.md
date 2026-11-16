@@ -77,6 +77,18 @@ ekranları MVP dışında.
 | Ürün adı | **Patika** (şimdilik) | Mağazaya çıkmadan önce yeniden değerlendirilecek |
 | Harita stili | **Outdoor + eş yükselti** | OpenMapTiles tabanlı, kontur + gölgeleme; Planetiler ile üretilecek |
 
+### Ek kararlar (17 Kasım 2026, ikinci tur)
+
+| Soru | Karar | Not |
+|------|-------|-----|
+| Avatar | **Çizgi karakter** (saç, ten, şapka, sırt çantası seçilir) | Fotoğraf ve gerçek isim zorunlu değil; kimlik gizli kalır |
+| Ton | **Sıcak ve canlı** | Avatarlar hafif zıplar, balonlar "pop" ile açılır, yardım tamamlanınca konfeti; yürüyüş modunda ve acil ekranda animasyon sakinleşir |
+| İhtiyaç gösterimi | **Avatarın üstünde emoji balonu** | Haritada balona dokununca "Su verebilirim" kartı; Pano sekmesi aynı ihtiyaçların listesi |
+| Canlı harita | Çevrimiçiyken avatarlar görünür; konum yine 250 m hücreye yuvarlanır | Görünürlük varsayılan kapalı, tek anahtarla açılır |
+
+Hareket ilkeleri: süre 200–400 ms, "spring" eğrisi; sürekli animasyon yalnız avatar nefes/zıplama ve ihtiyaç balonu
+nabzı; pil için yürüyüş modunda harita animasyonları durur.
+
 ### Renk token'ları (v1, taslak)
 - Zemin: `#F4F1E8` (krem), kart: `#FFFFFF`, harita zemini: `#EAF3DE`
 - Birincil (rota, aksiyon): `#3B6D11`; koyu metin: `#173404`; ikincil metin: `#5F5E5A`
