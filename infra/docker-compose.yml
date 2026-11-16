@@ -1,0 +1,50 @@
+# Geliştirme ve tek sunuculu üretim için. Üretimde .env ile gizli değerleri verin.
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: patika
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-patika}
+      POSTGRES_DB: patika
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U patika"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: ..
+      dockerfile: infra/api.Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgres://patika:${POSTGRES_PASSWORD:-patika}@db:5432/patika
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET gerekli}
+      MAIL_PROVIDER: ${MAIL_PROVIDER:-console}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      MAIL_FROM: ${MAIL_FROM:-Patika <no-reply@example.com>}
+      TILES_BASE_URL: ${TILES_BASE_URL:-http://localhost:8080}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  # Statik karo/veri paketi sunucusu: PMTiles için HTTP Range gerekir; nginx bunu varsayılan destekler.
+  tiles:
+    image: nginx:1.27-alpine
+    volumes:
+      - ../tools/data-pipeline/data/tiles:/usr/share/nginx/html:ro
+      - ./tiles.nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  pgdata:

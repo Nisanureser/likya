@@ -1,0 +1,27 @@
+{
+  "name": "@patika/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "1.4.3",
+    "@elysiajs/jwt": "1.4.2",
+    "@elysiajs/openapi": "1.4.17",
+    "@patika/db": "workspace:*",
+    "drizzle-orm": "0.45.4",
+    "@patika/shared": "workspace:*",
+    "elysia": "1.4.32",
+    "ulid": "3.0.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "5.9.3"
+  }
+}

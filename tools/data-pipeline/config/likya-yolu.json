@@ -1,0 +1,27 @@
+{
+  "slug": "likya-yolu",
+  "name": { "tr": "Likya Yolu", "en": "Lycian Way" },
+  "osm": {
+    "note": "OSM'deki Likya Yolu ilişkisi (type=route, route=hiking, name~Lycian Way). ID'yi Overpass veya https://www.openstreetmap.org/relation/<id> üzerinden doğrulayın.",
+    "relationQuery": "relation[\"route\"=\"hiking\"][\"name\"~\"Lycian Way|Likya Yolu\",i]",
+    "bbox": [28.9, 36.1, 30.8, 36.9]
+  },
+  "corridorKm": 8,
+  "stageBreaks": {
+    "note": "Etap sınırları, rota boyunca kümülatif km. Kültür Rotaları Derneği'nin güncel etap listesine göre keşif fazında doldurulacak. Boşsa tüm rota tek etap olur.",
+    "cumulativeKm": []
+  },
+  "pois": {
+    "overpass": [
+      "node[\"amenity\"=\"drinking_water\"]",
+      "node[\"natural\"=\"spring\"]",
+      "node[\"man_made\"=\"water_well\"]",
+      "node[\"amenity\"=\"fountain\"]",
+      "node[\"tourism\"~\"guest_house|hostel|hotel|camp_site|alpine_hut\"]",
+      "node[\"shop\"~\"convenience|supermarket|general\"]",
+      "node[\"amenity\"~\"restaurant|cafe\"]",
+      "node[\"highway\"=\"bus_stop\"]",
+      "node[\"historic\"~\"ruins|archaeological_site\"]"
+    ]
+  }
+}

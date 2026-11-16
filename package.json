@@ -1,0 +1,28 @@
+{
+  "name": "patika",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Likya Yolu yürüyüşçü dayanışma uygulaması — monorepo",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "api": "bun run --cwd apps/api dev",
+    "mobile": "bun run --cwd apps/mobile start",
+    "db:generate": "bun run --cwd packages/db generate",
+    "db:migrate": "bun run --cwd packages/db migrate",
+    "db:seed": "bun run --cwd packages/db seed",
+    "data:stages": "bun run --cwd tools/data-pipeline stages",
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun test",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.8",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "bun@1.4.4"
+}

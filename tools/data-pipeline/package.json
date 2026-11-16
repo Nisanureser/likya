@@ -1,0 +1,18 @@
+{
+  "name": "@patika/data-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "stages": "bun run src/build-stages.ts",
+    "pois": "bun run src/extract-pois.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@patika/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "5.9.3"
+  }
+}

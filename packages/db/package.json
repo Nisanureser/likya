@@ -1,0 +1,28 @@
+{
+  "name": "@patika/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts"
+  },
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "bun run src/migrate.ts",
+    "seed": "bun run src/seed.ts",
+    "studio": "drizzle-kit studio",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@patika/shared": "workspace:*",
+    "drizzle-orm": "0.45.4",
+    "postgres": "4.1.1",
+    "ulid": "3.0.2"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "drizzle-kit": "0.31.11",
+    "typescript": "5.9.3"
+  }
+}
