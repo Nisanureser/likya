@@ -1,6 +1,6 @@
-# Tasarım turu — ekran haritası taslağı (v0)
+# Tasarım turu — ekran haritası (v1)
 
-Durum: taslak, tartışmaya açık. Mobil ekran tasarımı daha önce yapılmadı; bu belge turu
+Durum: §5'teki kararlar 17 Kasım 2026'da verildi; §6 prototip aşamasında. Mobil ekran tasarımı daha önce yapılmadı; bu belge turu
 başlatmak için ilk öneridir. Kapsam: `docs/urun-analizi.md` §10 "daraltılmış MVP" + çevrimiçiyken
 canlı harita. Bluetooth yok.
 
@@ -32,8 +32,7 @@ canlı harita. Bluetooth yok.
 - **Ben** — profil, yürüyüş planı ve güvenilir kişiler, harita paketi indirme, konum paylaşım
   anahtarı, dil, hesap.
 
-Alternatif (daha az sekme): Harita + Pano + Ben; etap listesi Harita içinde bir alt sayfa olur.
-Karar bekliyor (bkz. §5).
+Karar: 4 sekme (17 Kas 2026).
 
 ## 3. Ekran envanteri (MVP)
 
@@ -67,19 +66,25 @@ ekranları MVP dışında.
 3. **Güvenlik**: Yürüyüş planı oluştur → güvenilir kişi ekle → "Vardım" → (gelmezse) bildirim.
 4. **Pano**: İhtiyaç oluştur → teklif al → kabul → tamamla.
 
-## 5. Karar bekleyen sorular
+## 5. Kararlar (17 Kasım 2026)
 
-1. Sekme sayısı: 4 sekme (Harita/Etap/Pano/Ben) mi, 3 sekme mi?
-2. Acil erişim: sekme çubuğunda sabit kırmızı düğme mi, sağ üst köşe mi?
-3. Görsel kimlik: ürün adı hâlâ "Patika" mı? Renk/ton (doğa-toprak tonları mı, yüksek kontrast
-   "güvenlik" turuncusu mu)?
-4. İlk prototip aracı: Expo içinde doğrudan kodla mı, yoksa önce tıklanabilir HTML/Figma benzeri
-   taslak mı?
-5. Harita stili: kendi ürettiğimiz karolar için OpenMapTiles tabanlı "outdoor" stil (eş yükselti
-   çizgileri dahil) mi, sade "trail" stil mi?
+| Soru | Karar | Not |
+|------|-------|-----|
+| Sekme sayısı | **4 sekme**: Harita / Etap / Pano / Ben | Etap listesi kendi sekmesinde |
+| Acil düğmesi | **Sağ üst, her ekranda** | Kısa basış → acil ekranı; uzun basış → doğrudan 112 |
+| Prototip aracı | **Tıklanabilir HTML taslak** | `docs/prototip/`; beğenilince Expo'ya taşınır |
+| Renk tonu | **A · Toprak ve doğa** | Yeşil/krem zemin; su mavi, acil kırmızı; açık tema varsayılan |
+| Ürün adı | **Patika** (şimdilik) | Mağazaya çıkmadan önce yeniden değerlendirilecek |
+| Harita stili | **Outdoor + eş yükselti** | OpenMapTiles tabanlı, kontur + gölgeleme; Planetiler ile üretilecek |
+
+### Renk token'ları (v1, taslak)
+- Zemin: `#F4F1E8` (krem), kart: `#FFFFFF`, harita zemini: `#EAF3DE`
+- Birincil (rota, aksiyon): `#3B6D11`; koyu metin: `#173404`; ikincil metin: `#5F5E5A`
+- Su: `#378ADD`; konaklama/bakkal: `#854F0B`; tehlike: `#BA7517`; acil: `#A32D2D`
+- Kenarlık: `#D3D1C7`
 
 ## 6. Sonraki adım
 
-Sorular yanıtlanınca: önce 1. ve 2. akış için düşük sadakatli ekran taslakları (wireframe),
+Önce 1. ve 2. akış için tıklanabilir HTML prototipi (`docs/prototip/index.html`),
 sonra tasarım token'ları (renk, tip ölçeği, boşluk) ve ortak bileşen listesi (durum şeridi, POI
 kartı, ihtiyaç kartı, büyük aksiyon düğmesi).
