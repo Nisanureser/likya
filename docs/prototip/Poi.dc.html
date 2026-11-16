@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>POI detayı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#3B6D11}a:hover{color:#27500A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #EAF3DE; color: #173404; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; position: relative; overflow: hidden">
+  <svg width="390" height="360" viewBox="0 0 390 360" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+    <path d="M0 260 L80 180 L150 230 L240 120 L320 200 L390 150 L390 360 L0 360 Z" fill="#C0DD97"/>
+    <path d="M-10 300 C80 260 120 200 200 180 S300 120 400 90" fill="none" stroke="#3B6D11" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="195" cy="182" r="26" fill="#378ADD" fill-opacity="0.2"/>
+    <circle cx="195" cy="182" r="11" fill="#378ADD" stroke="#FFFFFF" stroke-width="3"/>
+    <circle cx="110" cy="236" r="9" fill="#3B6D11" stroke="#FFFFFF" stroke-width="3"/>
+  </svg>
+  <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 56px 16px 0">
+    <a href="Harita.dc.html" aria-label="Kapat" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #D3D1C7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#173404" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <a href="Acil.dc.html" aria-label="Acil durum" style="width: 44px; height: 44px; border-radius: 50%; background: #A32D2D; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #FFFFFF; font-size: 12px; font-weight: 700">SOS</a>
+  </div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 560px; background: #F4F1E8; border-radius: 28px 28px 0 0; border-top: 1px solid #D3D1C7; display: flex; flex-direction: column; padding: 12px 20px 32px; gap: 16px; box-sizing: border-box">
+    <div style="width: 40px; height: 4px; border-radius: 2px; background: #D3D1C7; align-self: center"></div>
+    <div style="display: flex; align-items: flex-start; gap: 14px">
+      <div style="width: 48px; height: 48px; border-radius: 14px; background: #E6F1FB; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s-6 7-6 11.3a6 6 0 0 0 12 0C18 9.7 12 2.7 12 2.7z"/></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px; flex: 1">
+        <h1 style="margin: 0; font-size: 22px; font-weight: 600">Alınca çeşmesi</h1>
+        <span style="font-size: 14px; color: #5F5E5A">Su · Etap 12 · patika boyunca 3,4 km ileride</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: #EAF3DE; border: 1px solid #C0DD97">
+      <span style="width: 12px; height: 12px; border-radius: 50%; background: #3B6D11; flex-shrink: 0"></span>
+      <div style="display: flex; flex-direction: column; flex: 1">
+        <span style="font-size: 17px; font-weight: 600; color: #27500A">Akıyor</span>
+        <span style="font-size: 13px; color: #3B6D11">Son 7 günde 4 rapor · 3 akıyor, 1 az</span>
+      </div>
+      <span style="font-size: 12px; color: #5F5E5A">2 gün önce</span>
+    </div>
+    <div style="display: flex; gap: 10px">
+      <a href="Rapor.dc.html" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; height: 52px; border-radius: 14px; background: #3B6D11; color: #EAF3DE; text-decoration: none; font-size: 16px; font-weight: 600">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EAF3DE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        Durum bildir
+      </a>
+      <button onClick="{{ toggleCache }}" style="flex: 1; height: 52px; border-radius: 14px; border: 1px solid {{ cacheBorder }}; background: {{ cacheBg }}; color: {{ cacheFg }}; font-size: 14px; font-weight: 600; cursor: pointer">{{ cacheLabel }}</button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 13px; font-weight: 600; color: #27500A">Son raporlar</span>
+      <sc-for list="{{ reports }}" as="r" hint-placeholder-count="3">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D3D1C7">
+        <span style="width: 10px; height: 10px; border-radius: 50%; background: {{ r.color }}; flex-shrink: 0"></span>
+        <span style="font-size: 14px; font-weight: 500; color: #173404; width: 56px">{{ r.status }}</span>
+        <span style="font-size: 13px; color: #5F5E5A; flex: 1">{{ r.note }}</span>
+        <span style="font-size: 12px; color: #888780">{{ r.when }}</span>
+      </div>
+      </sc-for>
+    </div>
+    <p style="margin: auto 0 0; font-size: 12px; color: #888780; text-align: center">Raporlar çevrimdışı kaydedilir, sinyal gelince gönderilir.</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { cached: false }; }
+  renderVals() {
+    const c = this.state.cached;
+    return {
+      cacheLabel: c ? 'Su bıraktım ✓' : 'Buraya su bıraktım',
+      cacheBorder: c ? '#3B6D11' : '#D3D1C7',
+      cacheBg: c ? '#EAF3DE' : '#FFFFFF',
+      cacheFg: c ? '#27500A' : '#173404',
+      toggleCache: () => this.setState({ cached: !c }),
+      reports: [
+        { status: 'Akıyor', note: 'Bol su, soğuk.', when: '2 gün', color: '#3B6D11' },
+        { status: 'Akıyor', note: '', when: '4 gün', color: '#3B6D11' },
+        { status: 'Az', note: 'İnce akıyor, 1 L için 2 dk.', when: '6 gün', color: '#BA7517' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

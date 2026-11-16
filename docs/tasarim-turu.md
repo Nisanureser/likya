@@ -85,6 +85,6 @@ ekranları MVP dışında.
 
 ## 6. Sonraki adım
 
-Önce 1. ve 2. akış için tıklanabilir HTML prototipi (`docs/prototip/index.html`),
+1. ve 2. akış için tıklanabilir prototip hazır: https://claude.ai/artifact/4iQbJxbtaidGW53V7Lqkxz (kaynaklar `docs/prototip/`). Geri bildirim sonrası:
 sonra tasarım token'ları (renk, tip ölçeği, boşluk) ve ortak bileşen listesi (durum şeridi, POI
 kartı, ihtiyaç kartı, büyük aksiyon düğmesi).

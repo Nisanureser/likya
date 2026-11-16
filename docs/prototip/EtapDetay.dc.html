@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Etap detayı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#3B6D11}a:hover{color:#27500A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F4F1E8; color: #173404; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; position: relative; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px; padding: 56px 16px 8px">
+    <a href="Etaplar.dc.html" aria-label="Geri" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #D3D1C7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#173404" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div style="flex: 1; display: flex; flex-direction: column">
+      <span style="font-size: 12px; color: #5F5E5A">Etap 12</span>
+      <h1 style="margin: 0; font-size: 20px; font-weight: 600">Alınca → Gey</h1>
+    </div>
+    <a href="Acil.dc.html" aria-label="Acil durum" style="width: 44px; height: 44px; border-radius: 50%; background: #A32D2D; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #FFFFFF; font-size: 12px; font-weight: 700">SOS</a>
+  </div>
+  <div style="display: flex; gap: 8px; padding: 8px 16px 12px">
+    <div style="flex: 1; padding: 10px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D3D1C7; display: flex; flex-direction: column"><span style="font-size: 12px; color: #5F5E5A">Mesafe</span><span style="font-size: 18px; font-weight: 600">11,4 km</span></div>
+    <div style="flex: 1; padding: 10px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D3D1C7; display: flex; flex-direction: column"><span style="font-size: 12px; color: #5F5E5A">Tırmanış</span><span style="font-size: 18px; font-weight: 600">▲ 310 m</span></div>
+    <div style="flex: 1; padding: 10px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D3D1C7; display: flex; flex-direction: column"><span style="font-size: 12px; color: #5F5E5A">Süre</span><span style="font-size: 18px; font-weight: 600">4,5 sa</span></div>
+  </div>
+  <div style="margin: 0 16px; border-radius: 16px; background: #FFFFFF; border: 1px solid #D3D1C7; padding: 12px 12px 6px">
+    <span style="font-size: 12px; color: #5F5E5A">Yükseklik profili</span>
+    <svg width="332" height="90" viewBox="0 0 332 90" aria-hidden="true" style="display: block">
+      <path d="M0 70 L40 55 L80 60 L120 30 L160 38 L200 20 L240 45 L280 40 L332 65 L332 90 L0 90 Z" fill="#EAF3DE"/>
+      <path d="M0 70 L40 55 L80 60 L120 30 L160 38 L200 20 L240 45 L280 40 L332 65" fill="none" stroke="#3B6D11" stroke-width="2.5"/>
+      <circle cx="40" cy="55" r="5" fill="#378ADD" stroke="#FFFFFF" stroke-width="2"/>
+      <circle cx="200" cy="20" r="5" fill="#378ADD" stroke="#FFFFFF" stroke-width="2"/>
+      <circle cx="280" cy="40" r="5" fill="#854F0B" stroke="#FFFFFF" stroke-width="2"/>
+      <circle cx="110" cy="37" r="5" fill="#BA7517" stroke="#FFFFFF" stroke-width="2"/>
+      <circle cx="96" cy="45" r="6" fill="#3B6D11" stroke="#FFFFFF" stroke-width="2.5"/>
+      <text x="0" y="86" font-size="10" fill="#888780" font-family="Inter, system-ui, sans-serif">0 km</text>
+      <text x="302" y="86" font-size="10" fill="#888780" font-family="Inter, system-ui, sans-serif">11,4</text>
+    </svg>
+  </div>
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 8px">
+    <span style="font-size: 14px; font-weight: 600; color: #27500A">Rota üzerindeki noktalar</span>
+    <span style="font-size: 12px; color: #888780">patika boyunca km</span>
+  </div>
+  <div style="flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 0 16px; overflow: hidden">
+    <sc-for list="{{ pois }}" as="p" hint-placeholder-count="4">
+    <a href="Poi.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D3D1C7; text-decoration: none; color: #173404">
+      <span style="width: 12px; height: 12px; border-radius: 50%; background: {{ p.color }}; flex-shrink: 0"></span>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0">
+        <span style="font-size: 15px; font-weight: 500">{{ p.name }}</span>
+        <span style="font-size: 12px; color: {{ p.statusColor }}">{{ p.status }}</span>
+      </div>
+      <span style="font-size: 14px; font-weight: 500; color: #5F5E5A; flex-shrink: 0">{{ p.km }}</span>
+    </a>
+    </sc-for>
+  </div>
+  <div style="padding: 10px 16px 12px; display: flex; gap: 10px">
+    <a href="Harita.dc.html" style="flex: 1; display: flex; align-items: center; justify-content: center; height: 52px; border-radius: 14px; background: #3B6D11; color: #EAF3DE; text-decoration: none; font-size: 16px; font-weight: 600">Bu etaptayım</a>
+    <a href="Harita.dc.html" aria-label="Haritada göster" style="width: 52px; height: 52px; border-radius: 14px; border: 1px solid #D3D1C7; background: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#173404" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>
+    </a>
+  </div>
+  <div style="height: 84px; background: #FFFFFF; border-top: 1px solid #D3D1C7; display: flex; justify-content: space-around; align-items: flex-start; padding-top: 10px">
+    <a href="Harita.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 70px; text-decoration: none; color: #888780; font-size: 11px; font-weight: 500">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888780" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>Harita
+    </a>
+    <a href="Etaplar.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 70px; text-decoration: none; color: #27500A; font-size: 11px; font-weight: 600">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#27500A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20l6-14 4 8 3-5 5 11z"/></svg>Etap
+    </a>
+    <a href="EtapDetay.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 70px; text-decoration: none; color: #888780; font-size: 11px; font-weight: 500">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888780" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Pano
+    </a>
+    <a href="EtapDetay.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 70px; text-decoration: none; color: #888780; font-size: 11px; font-weight: 500">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888780" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Ben
+    </a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      pois: [
+        { name: 'Alınca çeşmesi', status: 'Akıyor · 2 gün önce', statusColor: '#3B6D11', color: '#378ADD', km: '1,4' },
+        { name: 'Heyelan, işaret silik', status: 'Dikkat · 5 gün önce', statusColor: '#854F0B', color: '#BA7517', km: '3,8' },
+        { name: 'Yayla kaynağı', status: 'Az · 1 hafta önce', statusColor: '#854F0B', color: '#378ADD', km: '6,9' },
+        { name: 'Gey · Pansiyon Deniz', status: 'Açık · dün', statusColor: '#3B6D11', color: '#854F0B', km: '11,0' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
