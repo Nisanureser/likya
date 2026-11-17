@@ -7,7 +7,7 @@ import { authPlugin } from "../plugins/auth";
 import { upsertHike, upsertLastKnown } from "../services/hikes";
 
 export const hikesModule = (ctx: AppContext) =>
-  new Elysia()
+  new Elysia({ tags: ["Güvenlik"] })
     .use(authPlugin(ctx))
     .get(
       "/hikes",
@@ -18,7 +18,7 @@ export const hikesModule = (ctx: AppContext) =>
           .where(eq(hikes.userId, user.id))
           .orderBy(desc(hikes.plannedStart))
           .limit(50),
-      { auth: true },
+      { detail: { summary: "Yürüyüş planlarım" }, auth: true },
     )
     .get(
       "/hikes/active",
@@ -33,7 +33,7 @@ export const hikesModule = (ctx: AppContext) =>
           .limit(1);
         return h ?? null;
       },
-      { auth: true },
+      { detail: { summary: "Aktif yürüyüş planı" }, auth: true },
     )
     .put(
       "/hikes/:id",
@@ -45,7 +45,11 @@ export const hikesModule = (ctx: AppContext) =>
           return status(msg === "forbidden" ? 403 : 400, { error: msg });
         }
       },
-      { auth: true, body: hikeSchema.omit({ id: true }) },
+      {
+        detail: { summary: "Plan oluştur/güncelle" },
+        auth: true,
+        body: hikeSchema.omit({ id: true }),
+      },
     )
     /** "Vardım" — gecikme bildirimlerini durdurur. */
     .post(
@@ -63,9 +67,10 @@ export const hikesModule = (ctx: AppContext) =>
           .where(eq(hikes.id, params.id));
         return { ok: true, version: h.version + 1 };
       },
-      { auth: true },
+      { detail: { summary: "Vardım" }, auth: true },
     )
     .put("/last-known", async ({ user, body }) => upsertLastKnown(ctx.db, user.id, body), {
+      detail: { summary: "Son bilinen konumu kaydet" },
       auth: true,
       body: lastKnownSchema,
     })
@@ -75,5 +80,5 @@ export const hikesModule = (ctx: AppContext) =>
         const [lk] = await ctx.db.select().from(lastKnown).where(eq(lastKnown.userId, user.id));
         return lk ?? null;
       },
-      { auth: true },
+      { detail: { summary: "Son bilinen konum" }, auth: true },
     );

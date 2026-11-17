@@ -8,68 +8,85 @@ import type { AppContext } from "../context";
 /** Rota, etap ve POI okuma uçları. Hepsi herkese açık (okuma).
  *  Mobil, çevrimdışı paket için /trails/:slug/pack ile tam veriyi alır. */
 export const trailsModule = (ctx: AppContext) =>
-  new Elysia({ prefix: "/trails" })
-    .get("/", async () => {
-      return ctx.db
-        .select({
-          id: trails.id,
-          slug: trails.slug,
-          name: trails.name,
-          dataVersion: trails.dataVersion,
-          lengthM: trails.lengthM,
-          bbox: trails.bbox,
-        })
-        .from(trails)
-        .where(eq(trails.isActive, true));
-    })
-    .get("/:slug", async ({ params, status }) => {
-      const [t] = await ctx.db.select().from(trails).where(eq(trails.slug, params.slug));
-      if (!t) return status(404, { error: "trail_not_found" });
-      const st = await ctx.db
-        .select({
-          id: stages.id,
-          seq: stages.seq,
-          name: stages.name,
-          distanceM: stages.distanceM,
-          ascentM: stages.ascentM,
-          descentM: stages.descentM,
-          cumStartM: stages.cumStartM,
-          notes: stages.notes,
-        })
-        .from(stages)
-        .where(eq(stages.trailId, t.id))
-        .orderBy(asc(stages.seq));
-      return { ...t, stages: st };
-    })
+  new Elysia({ prefix: "/trails", tags: ["Rota"] })
+    .get(
+      "/",
+      async () => {
+        return ctx.db
+          .select({
+            id: trails.id,
+            slug: trails.slug,
+            name: trails.name,
+            dataVersion: trails.dataVersion,
+            lengthM: trails.lengthM,
+            bbox: trails.bbox,
+          })
+          .from(trails)
+          .where(eq(trails.isActive, true));
+      },
+      { detail: { summary: "Rotaları listele" } },
+    )
+    .get(
+      "/:slug",
+      async ({ params, status }) => {
+        const [t] = await ctx.db.select().from(trails).where(eq(trails.slug, params.slug));
+        if (!t) return status(404, { error: "trail_not_found" });
+        const st = await ctx.db
+          .select({
+            id: stages.id,
+            seq: stages.seq,
+            name: stages.name,
+            distanceM: stages.distanceM,
+            ascentM: stages.ascentM,
+            descentM: stages.descentM,
+            cumStartM: stages.cumStartM,
+            notes: stages.notes,
+          })
+          .from(stages)
+          .where(eq(stages.trailId, t.id))
+          .orderBy(asc(stages.seq));
+        return { ...t, stages: st };
+      },
+      { detail: { summary: "Rota ve etapları" } },
+    )
     /** Etap geometrileri GeoJSON olarak (çevrimdışı paket ve harita katmanı). */
-    .get("/:slug/stages.geojson", async ({ params, status }) => {
-      const [t] = await ctx.db
-        .select({ id: trails.id })
-        .from(trails)
-        .where(eq(trails.slug, params.slug));
-      if (!t) return status(404, { error: "trail_not_found" });
-      const rows = await ctx.db
-        .select({
-          id: stages.id,
-          seq: stages.seq,
-          name: stages.name,
-          distanceM: stages.distanceM,
-          cumStartM: stages.cumStartM,
-          geojson: geo.asGeoJson(stages.track),
-        })
-        .from(stages)
-        .where(eq(stages.trailId, t.id))
-        .orderBy(asc(stages.seq));
-      return {
-        type: "FeatureCollection",
-        features: rows.map((r) => ({
-          type: "Feature",
-          id: r.id,
-          properties: { seq: r.seq, name: r.name, distanceM: r.distanceM, cumStartM: r.cumStartM },
-          geometry: JSON.parse(r.geojson),
-        })),
-      };
-    })
+    .get(
+      "/:slug/stages.geojson",
+      async ({ params, status }) => {
+        const [t] = await ctx.db
+          .select({ id: trails.id })
+          .from(trails)
+          .where(eq(trails.slug, params.slug));
+        if (!t) return status(404, { error: "trail_not_found" });
+        const rows = await ctx.db
+          .select({
+            id: stages.id,
+            seq: stages.seq,
+            name: stages.name,
+            distanceM: stages.distanceM,
+            cumStartM: stages.cumStartM,
+            geojson: geo.asGeoJson(stages.track),
+          })
+          .from(stages)
+          .where(eq(stages.trailId, t.id))
+          .orderBy(asc(stages.seq));
+        return {
+          type: "FeatureCollection",
+          features: rows.map((r) => ({
+            type: "Feature",
+            id: r.id,
+            properties: {
+              seq: r.seq,
+              name: r.name,
+              distanceM: r.distanceM,
+              cumStartM: r.cumStartM,
+            },
+            geometry: JSON.parse(r.geojson),
+          })),
+        };
+      },
+      { detail: { summary: "Etap çizgileri (GeoJSON)" } },
+    )
     /** POI listesi; `since` verilirse yalnız o tarihten sonra değişenler (delta). */
     .get(
       "/:slug/pois",
@@ -106,6 +123,7 @@ export const trailsModule = (ctx: AppContext) =>
         return { pois: rows, serverTime: new Date().toISOString() };
       },
       {
+        detail: { summary: "Rotadaki noktalar (POI) ve türetilmiş durumları" },
         query: z.object({
           type: z.enum(POI_TYPES).optional(),
           since: z.iso.datetime({ offset: true }).optional(),
@@ -144,6 +162,7 @@ export const trailsModule = (ctx: AppContext) =>
         return rows.map((r) => ({ ...r, aheadM: (r.trailOffsetM ?? 0) - query.offsetM }));
       },
       {
+        detail: { summary: "Patika boyunca sonraki su/konaklama" },
         query: z.object({
           offsetM: z.coerce.number().min(0),
           type: z.enum(POI_TYPES).optional(),
@@ -152,18 +171,22 @@ export const trailsModule = (ctx: AppContext) =>
       },
     )
     /** Çevrimdışı paket bildirimi: harita karoları, etaplar, POI'ler nereden indirilir. */
-    .get("/:slug/pack", async ({ params, status }) => {
-      const [t] = await ctx.db.select().from(trails).where(eq(trails.slug, params.slug));
-      if (!t) return status(404, { error: "trail_not_found" });
-      return {
-        slug: t.slug,
-        dataVersion: t.dataVersion,
-        bbox: t.bbox,
-        tiles: {
-          style: `${ctx.env.TILES_BASE_URL}/styles/${t.slug}.json`,
-          pmtiles: `${ctx.env.TILES_BASE_URL}/${t.slug}.pmtiles`,
-        },
-        stagesUrl: `/trails/${t.slug}/stages.geojson`,
-        poisUrl: `/trails/${t.slug}/pois`,
-      };
-    });
+    .get(
+      "/:slug/pack",
+      async ({ params, status }) => {
+        const [t] = await ctx.db.select().from(trails).where(eq(trails.slug, params.slug));
+        if (!t) return status(404, { error: "trail_not_found" });
+        return {
+          slug: t.slug,
+          dataVersion: t.dataVersion,
+          bbox: t.bbox,
+          tiles: {
+            style: `${ctx.env.TILES_BASE_URL}/styles/${t.slug}.json`,
+            pmtiles: `${ctx.env.TILES_BASE_URL}/${t.slug}.pmtiles`,
+          },
+          stagesUrl: `/trails/${t.slug}/stages.geojson`,
+          poisUrl: `/trails/${t.slug}/pois`,
+        };
+      },
+      { detail: { summary: "Çevrimdışı veri paketi bilgisi" } },
+    );

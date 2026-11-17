@@ -22,7 +22,7 @@ const handle = (e: unknown, status: (code: number, body: unknown) => unknown) =>
 };
 
 export const needsModule = (ctx: AppContext) =>
-  new Elysia({ prefix: "/needs" })
+  new Elysia({ prefix: "/needs", tags: ["İhtiyaç"] })
     .use(authPlugin(ctx))
     /** Açık ihtiyaçlar: etap panosu (stageSeq) veya yakınlık (lon/lat) ile. */
     .get(
@@ -70,6 +70,7 @@ export const needsModule = (ctx: AppContext) =>
         };
       },
       {
+        detail: { summary: "Yakındaki açık ihtiyaçlar" },
         auth: true,
         query: z.object({
           trail: z.string(),
@@ -89,7 +90,7 @@ export const needsModule = (ctx: AppContext) =>
           return handle(e, status as never);
         }
       },
-      { auth: true, body: needCreateSchema },
+      { detail: { summary: "İhtiyaç bildir (emoji balonu)" }, auth: true, body: needCreateSchema },
     )
     /** Detay: hassas konum yalnız sahibine ve kabul edilmiş yardımcıya. */
     .get(
@@ -124,7 +125,7 @@ export const needsModule = (ctx: AppContext) =>
           offers: isOwner ? offers : offers.filter((o) => o.helperId === user.id),
         };
       },
-      { auth: true },
+      { detail: { summary: "İhtiyaç detayı ve teklifler" }, auth: true },
     )
     .patch(
       "/:id/status",
@@ -136,7 +137,11 @@ export const needsModule = (ctx: AppContext) =>
           return handle(e, status as never);
         }
       },
-      { auth: true, body: z.object({ status: z.enum(["cancelled", "completed"]) }) },
+      {
+        detail: { summary: "İhtiyacı kapat (tamamlandı/iptal)" },
+        auth: true,
+        body: z.object({ status: z.enum(["cancelled", "completed"]) }),
+      },
     )
     .post(
       "/:id/offers",
@@ -147,7 +152,11 @@ export const needsModule = (ctx: AppContext) =>
           return handle(e, status as never);
         }
       },
-      { auth: true, body: offerCreateSchema.omit({ needId: true }) },
+      {
+        detail: { summary: "Yardım teklif et" },
+        auth: true,
+        body: offerCreateSchema.omit({ needId: true }),
+      },
     )
     .patch(
       "/offers/:offerId",
@@ -160,7 +169,11 @@ export const needsModule = (ctx: AppContext) =>
           return handle(e, status as never);
         }
       },
-      { auth: true, body: z.object({ decision: z.enum(["accepted", "declined", "withdrawn"]) }) },
+      {
+        detail: { summary: "Teklifi kabul/ret/geri çek" },
+        auth: true,
+        body: z.object({ decision: z.enum(["accepted", "declined", "withdrawn"]) }),
+      },
     )
     /** Kendi ihtiyaçlarım ve teklif verdiklerim. */
     .get(
@@ -189,5 +202,5 @@ export const needsModule = (ctx: AppContext) =>
           helping,
         };
       },
-      { auth: true },
+      { detail: { summary: "Benim ihtiyaçlarım ve tekliflerim" }, auth: true },
     );

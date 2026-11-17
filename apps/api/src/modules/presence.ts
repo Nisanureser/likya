@@ -24,7 +24,7 @@ function isNightLocal(): boolean {
  * - Görünürlük profil tercihine bağlı; gece gizleme sunucuda uygulanır.
  */
 export const presenceModule = (ctx: AppContext) =>
-  new Elysia({ prefix: "/presence" })
+  new Elysia({ prefix: "/presence", tags: ["Canlı harita"] })
     .use(authPlugin(ctx))
     .put(
       "/",
@@ -58,6 +58,7 @@ export const presenceModule = (ctx: AppContext) =>
         return { ok: true, expiresAt };
       },
       {
+        detail: { summary: "Varlığımı güncelle (kabalaştırılmış konum)" },
         auth: true,
         body: z.object({
           trail: z.string(),
@@ -72,7 +73,7 @@ export const presenceModule = (ctx: AppContext) =>
         await ctx.db.delete(presence).where(eq(presence.userId, user.id));
         return { ok: true };
       },
-      { auth: true },
+      { detail: { summary: "Haritadan çekil" }, auth: true },
     )
     /** Yakındaki aktif yürüyüşçüler: sayı ve kaba konumlar. Kendisi ve engellediği/engellendiği kişiler hariç. */
     .get(
@@ -128,6 +129,7 @@ export const presenceModule = (ctx: AppContext) =>
         };
       },
       {
+        detail: { summary: "Yakındaki yürüyüşçüler ve ihtiyaçlar" },
         auth: true,
         query: z.object({
           lon: z.coerce.number(),

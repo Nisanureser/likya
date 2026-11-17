@@ -110,7 +110,7 @@ async function applyItem(ctx: AppContext, userId: string, item: OutboxItem): Pro
 }
 
 export const syncModule = (ctx: AppContext) =>
-  new Elysia({ prefix: "/sync" })
+  new Elysia({ prefix: "/sync", tags: ["Senkron"] })
     .use(authPlugin(ctx))
     .post(
       "/push",
@@ -148,7 +148,11 @@ export const syncModule = (ctx: AppContext) =>
         }
         return { results, serverTime: new Date().toISOString() } satisfies SyncPushResponse;
       },
-      { auth: true, body: syncPushRequestSchema },
+      {
+        detail: { summary: "Çevrimdışı birikmiş işlemleri gönder" },
+        auth: true,
+        body: syncPushRequestSchema,
+      },
     )
     /**
      * Delta çekme: `since` sonrası değişen POI'ler, açık ihtiyaçlar, kullanıcının kendi kayıtları
@@ -244,6 +248,7 @@ export const syncModule = (ctx: AppContext) =>
         };
       },
       {
+        detail: { summary: "Güncel veriyi çek (delta)" },
         auth: true,
         query: syncPullRequestSchema.extend({ deviceId: z.string().min(8).max(64).optional() }),
       },

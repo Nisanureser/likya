@@ -21,7 +21,7 @@ async function hashCode(email: string, code: string): Promise<string> {
 }
 
 export const authModule = (ctx: AppContext) =>
-  new Elysia({ prefix: "/auth" })
+  new Elysia({ prefix: "/auth", tags: ["Kimlik"] })
     .use(authPlugin(ctx))
     /** E-posta ile tek kullanımlık kod iste. Geliştirmede kod konsola yazılır. */
     .post(
@@ -54,7 +54,10 @@ export const authModule = (ctx: AppContext) =>
         );
         return { ok: true, throttled: false };
       },
-      { body: z.object({ email: z.email() }) },
+      {
+        detail: { summary: "E-posta ile tek kullanımlık kod iste" },
+        body: z.object({ email: z.email() }),
+      },
     )
     /** Kodu doğrula; kullanıcı yoksa oluştur; JWT döndür. */
     .post(
@@ -106,12 +109,17 @@ export const authModule = (ctx: AppContext) =>
         const token = await jwt.sign({ sub: user.id });
         return { token, userId: user.id, isNew, hasProfile: Boolean(profile) };
       },
-      { body: z.object({ email: z.email(), code: z.string().length(6) }) },
+      {
+        detail: { summary: "Kodu doğrula, giriş jetonu al" },
+        body: z.object({ email: z.email(), code: z.string().length(6) }),
+      },
     )
     /**
      * Apple / Google ile giriş — iskelet. Üretimde kimlik jetonu sağlayıcının anahtarlarıyla
      * doğrulanmalı (apple: appleid.apple.com/auth/keys, google: tokeninfo). Şimdilik 501.
      */
-    .post("/oauth/:provider", ({ params, status }) =>
-      status(501, { error: `${params.provider} henüz uygulanmadı` }),
+    .post(
+      "/oauth/:provider",
+      ({ params, status }) => status(501, { error: `${params.provider} henüz uygulanmadı` }),
+      { detail: { summary: "Apple/Google ile giriş (henüz yok)" } },
     );

@@ -7,7 +7,7 @@ import type { AppContext } from "../context";
 import { authPlugin } from "../plugins/auth";
 
 export const meModule = (ctx: AppContext) =>
-  new Elysia({ prefix: "/me" })
+  new Elysia({ prefix: "/me", tags: ["Ben"] })
     .use(authPlugin(ctx))
     .get(
       "/",
@@ -23,7 +23,7 @@ export const meModule = (ctx: AppContext) =>
           .where(eq(trustedContacts.userId, user.id));
         return { user: u, profile: p ?? null, contacts };
       },
-      { auth: true },
+      { detail: { summary: "Profilim, güvenilir kişilerim, cihazlarım" }, auth: true },
     )
     /** Profil upsert (LWW: gelen version mevcut olandan büyük veya eşitse uygulanır). */
     .put(
@@ -46,7 +46,11 @@ export const meModule = (ctx: AppContext) =>
           .returning();
         return { applied: true, version: row?.version ?? version };
       },
-      { auth: true, body: profileSchema.extend({ version: z.number().int().min(1).default(1) }) },
+      {
+        detail: { summary: "Profili güncelle" },
+        auth: true,
+        body: profileSchema.extend({ version: z.number().int().min(1).default(1) }),
+      },
     )
     .put(
       "/contacts/:id",
@@ -60,7 +64,11 @@ export const meModule = (ctx: AppContext) =>
           });
         return { ok: true };
       },
-      { auth: true, body: trustedContactSchema.omit({ id: true }) },
+      {
+        detail: { summary: "Güvenilir kişi ekle/güncelle" },
+        auth: true,
+        body: trustedContactSchema.omit({ id: true }),
+      },
     )
     .delete(
       "/contacts/:id",
@@ -72,7 +80,7 @@ export const meModule = (ctx: AppContext) =>
           );
         return { ok: true };
       },
-      { auth: true },
+      { detail: { summary: "Güvenilir kişiyi sil" }, auth: true },
     )
     /** Cihaz kaydı: push jetonu ve sürüm. */
     .put(
@@ -88,6 +96,7 @@ export const meModule = (ctx: AppContext) =>
         return { ok: true };
       },
       {
+        detail: { summary: "Cihaz ve push jetonu kaydet" },
         auth: true,
         body: z.object({
           platform: z.enum(PLATFORMS),
@@ -104,5 +113,5 @@ export const meModule = (ctx: AppContext) =>
         await ctx.db.delete(users).where(eq(users.id, user.id));
         return { ok: true };
       },
-      { auth: true },
+      { detail: { summary: "Hesabımı sil" }, auth: true },
     );
