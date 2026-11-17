@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F4F1E8"
     },
     "ios": {
       "bundleIdentifier": "com.patika.app",
@@ -25,8 +25,10 @@
     "android": {
       "package": "com.patika.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png",
+        "backgroundColor": "#F4F1E8"
       },
       "permissions": [
         "ACCESS_COARSE_LOCATION",
@@ -49,10 +51,19 @@
           "isAndroidForegroundServiceEnabled": true
         }
       ],
-      ["expo-notifications", { "icon": "./assets/icon.png" }],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png"
+        }
+      ],
       "expo-background-task",
       "@maplibre/maplibre-react-native"
     ],
-    "extra": { "eas": { "projectId": "" } }
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    }
   }
 }

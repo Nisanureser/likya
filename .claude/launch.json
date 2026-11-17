@@ -4,8 +4,24 @@
     {
       "name": "api",
       "runtimeExecutable": "bun",
-      "runtimeArgs": ["run", "--cwd", "apps/api", "dev"],
+      "runtimeArgs": [
+        "run",
+        "--cwd",
+        "apps/api",
+        "dev"
+      ],
       "port": 3000
+    },
+    {
+      "name": "metro",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": [
+        "run",
+        "--cwd",
+        "apps/mobile",
+        "start"
+      ],
+      "port": 8081
     }
   ]
 }
